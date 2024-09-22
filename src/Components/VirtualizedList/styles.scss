@@ -1,7 +1,13 @@
-.virtualized-list {
-  box-sizing: border-box;
-  direction: ltr;
-  overflow: hidden auto;
-  position: relative;
-  will-change: transform;
+.virtualized-list-link {
+  background: white;
+  .virtualized-list-link-item {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
 }

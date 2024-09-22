@@ -13,7 +13,7 @@ interface VirtualizedListProps {
   containerHeight: number;
 }
 
-const GAP = 1000;
+const GAP = 1500;
 
 const VirtualizedList = ({ items, containerHeight }: VirtualizedListProps) => {
   const [itemsInView, setItemsInView] = useState<GalleryImage[] | null>(null);
@@ -34,19 +34,19 @@ const VirtualizedList = ({ items, containerHeight }: VirtualizedListProps) => {
     setItemsInView(newData);
   }, [items, containerHeight]);
 
-  const loadMooreDebounce = useDebounce(doCalculation, 100);
+  const doCalculationDebounce = useDebounce(doCalculation, 10);
 
   useEffect(() => {
-    loadMooreDebounce();
-  }, [loadMooreDebounce]);
+    doCalculationDebounce();
+  }, [doCalculationDebounce]);
 
   useEffect(() => {
-    window.addEventListener("scroll", loadMooreDebounce);
+    window.addEventListener("scroll", doCalculationDebounce);
 
     return () => {
-      window.removeEventListener("scroll", loadMooreDebounce);
+      window.removeEventListener("scroll", doCalculationDebounce);
     };
-  }, [loadMooreDebounce]);
+  }, [doCalculationDebounce]);
 
   return (
     <div
@@ -56,10 +56,10 @@ const VirtualizedList = ({ items, containerHeight }: VirtualizedListProps) => {
     >
       {itemsInView &&
         itemsInView.map(({ width, height, top, left, id, url }) => (
-          <Link to={`/info/${id}`} key={id}>
+          <Link className="virtualized-list-link" to={`/info/${id}`} key={id}>
             <img
               loading="lazy"
-              className="gallery-container-masonry-grid-item"
+              className="virtualized-list-link-item"
               src={url}
               alt={`Image ${id}`}
               style={{
